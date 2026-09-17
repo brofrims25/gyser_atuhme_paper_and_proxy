@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.mynetwork.bedrockbypass</groupId>
+        <artifactId>bedrockbypass-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>bedrockbypass-velocity</artifactId>
+    <packaging>jar</packaging>
+    <name>BedrockAuthBypass-Velocity</name>
+
+    <properties>
+        <!--
+          Velocity resmi (PaperMC) & fork populer (mis. Velocity-CTD) sejak
+          pertengahan 2026 sama-sama pindah ke velocity-api 4.0.0-SNAPSHOT
+          (proxy-nya sendiri jadi butuh Java 25 ke atas untuk DIJALANKAN).
+          Kalau proxy-mu masih versi lama, turunkan ke velocity-api 3.4.0-SNAPSHOT.
+          Cek versi persis yang cocok dengan build Velocity-mu di:
+            https://repo.papermc.io/service/rest/repository/browse/maven-public/com/velocitypowered/velocity-api/
+        -->
+        <velocity.api.version>4.0.0-SNAPSHOT</velocity.api.version>
+        <floodgate.api.version>2.2.5-SNAPSHOT</floodgate.api.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>opencollab-snapshot-repo</id>
+            <url>https://repo.opencollab.dev/maven-snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>${velocity.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- Floodgate WAJIB sudah terpasang sebagai plugin terpisah di proxy ini. -->
+            <groupId>org.geysermc.floodgate</groupId>
+            <artifactId>api</artifactId>
+            <version>${floodgate.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Wajib: velocity-api berisi annotation processor yang men-generate
+                         velocity-plugin.json otomatis dari anotasi @Plugin di kode. -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.velocitypowered</groupId>
+                            <artifactId>velocity-api</artifactId>
+                            <version>${velocity.api.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

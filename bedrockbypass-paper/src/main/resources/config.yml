@@ -1,0 +1,27 @@
+# ==========================================================
+# Konfigurasi BedrockAuthBypass (sisi Paper / server login)
+# ==========================================================
+
+# Nyala/matikan seluruh fitur auto-login lewat config ini tanpa uninstall plugin.
+enabled: true
+
+# Kalau player Bedrock belum pernah terdaftar di AuthMe, daftarkan otomatis
+# dengan password acak (password itu tidak pernah dipakai manual, karena
+# player Bedrock selalu login otomatis lewat plugin ini).
+auto-register: true
+
+# Panjang password acak yang digenerate.
+generated-password-length: 32
+
+# Plugin akan MENCOBA BEBERAPA KALI (bukan sekali) untuk force-login/register,
+# karena AuthMe memuat data player secara async saat PlayerJoinEvent -
+# kalau langsung dipanggil sekali di awal, kadang belum siap dan gagal diam-diam.
+# Angka di bawah ini adalah jeda tiap percobaan dalam TICK (20 tick = 1 detik).
+retry-delays-ticks: [10, 30, 60, 100]
+
+# Kirim pesan singkat ke player Bedrock setelah berhasil auto-login.
+send-welcome-message: true
+welcome-message: '&aKamu berhasil masuk otomatis sebagai player Bedrock.'
+
+# Aktifkan log tambahan di console server untuk troubleshooting.
+debug: false
