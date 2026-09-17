@@ -1,9 +1,0 @@
-name: BedrockAuthBypass
-version: '${project.version}'
-main: com.mynetwork.bedrockbypass.paper.BedrockBypassPlugin
-api-version: '1.21'
-author: MyNetwork
-description: Auto-register & auto-login player Bedrock (Geyser/Floodgate) di AuthMe, tanpa mengganggu player Java.
-
-# Plugin ini WAJIB dimuat setelah Floodgate & AuthMe supaya API keduanya sudah siap.
-depend: [Floodgate, AuthMe]
