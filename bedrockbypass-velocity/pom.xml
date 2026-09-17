@@ -16,10 +16,20 @@
 
     <properties>
         <!--
+          PENTING: meng-compile modul ini butuh JDK 25 di komputer/CI-mu,
+          BUKAN cuma untuk menjalankan proxy-nya. Sebabnya: velocity-api
+          4.0.0-SNAPSHOT membawa annotation processor (yang men-generate
+          velocity-plugin.json dari anotasi @Plugin) yang class file-nya
+          sendiri sudah dikompilasi pakai JDK 25 - JDK yang lebih lama
+          (mis. 21) akan gagal dengan error "class file version 69.0 ...
+          only recognizes class file versions up to 65.0" saat mencoba
+          MEMUAT processor itu, walau kode kita sendiri cuma target
+          --release 17. Kalau proxy-mu masih velocity-api versi lama
+          (3.4.0-SNAPSHOT ke bawah), JDK 21 biasanya masih cukup.
+
           Velocity resmi (PaperMC) & fork populer (mis. Velocity-CTD) sejak
           pertengahan 2026 sama-sama pindah ke velocity-api 4.0.0-SNAPSHOT
-          (proxy-nya sendiri jadi butuh Java 25 ke atas untuk DIJALANKAN).
-          Kalau proxy-mu masih versi lama, turunkan ke velocity-api 3.4.0-SNAPSHOT.
+          (proxy-nya sendiri jadi butuh Java 25 ke atas untuk DIJALANKAN juga).
           Cek versi persis yang cocok dengan build Velocity-mu di:
             https://repo.papermc.io/service/rest/repository/browse/maven-public/com/velocitypowered/velocity-api/
         -->
