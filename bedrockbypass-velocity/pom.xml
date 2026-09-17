@@ -16,20 +16,26 @@
 
     <properties>
         <!--
-          velocity-api 4.0.0-SNAPSHOT membawa annotation processor (yang
-          seharusnya men-generate velocity-plugin.json dari anotasi @Plugin)
-          yang class file-nya sendiri dikompilasi pakai JDK 25 - JDK yang
-          lebih lama (mis. 21) gagal MEMUAT processor itu dengan error
-          "class file version 69.0 ... only recognizes class file versions
-          up to 65.0", walau kode kita sendiri cuma menyasar bytecode target
-          Java 17 (opsi compiler "release" bernilai 17).
+          PENTING: meng-compile modul ini butuh JDK 25 di komputer/CI-mu,
+          BUKAN cuma untuk menjalankan proxy-nya. Sebabnya BUKAN cuma
+          annotation processor-nya velocity-api (yang sudah dimatikan lewat
+          <proc>none> di bawah + velocity-plugin.json manual) - ternyata
+          SELURUH isi jar velocity-api 4.0.0-SNAPSHOT sendiri (semua class
+          publik yang kita import: @Plugin, @Subscribe, ProxyServer, dst)
+          memang di-compile pakai JDK 25 (class file version 69). javac
+          versi lama (mis. JDK 21, cuma baca sampai class file 65) akan
+          gagal dengan error "bad class file ... class file has wrong
+          version 69.0, should be 65.0" begitu source kita meng-import
+          class apa pun dari library ini - walau kode kita sendiri cuma
+          menyasar bytecode target Java 17 (opsi compiler "release"
+          bernilai 17, hasil .jar-nya tetap jalan di JVM 17+).
 
-          Supaya build tidak bergantung pada JDK 25 sama sekali, annotation
-          processing untuk modul ini DIMATIKAN (lihat <proc>none</proc> di
-          bawah) dan velocity-plugin.json ditulis manual di
-          src/main/resources/velocity-plugin.json (isinya harus tetap
-          sinkron dengan anotasi @Plugin di BedrockBypassVelocityPlugin.java
-          kalau id/versi/deskripsi/dependency berubah).
+          Kalau proxy-mu masih pakai velocity-api versi lama
+          (3.4.0-SNAPSHOT ke bawah, biasanya dari sebelum pertengahan
+          2026), JDK 21 cukup - tapi itu berarti proxy-mu juga belum
+          pindah ke arsitektur baru yang butuh Java 25 untuk DIJALANKAN.
+          Cek versi persis yang cocok dengan build Velocity-mu di:
+            https://repo.papermc.io/service/rest/repository/browse/maven-public/com/velocitypowered/velocity-api/
         -->
         <velocity.api.version>4.0.0-SNAPSHOT</velocity.api.version>
         <floodgate.api.version>2.2.5-SNAPSHOT</floodgate.api.version>

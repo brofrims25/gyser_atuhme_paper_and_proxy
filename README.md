@@ -65,10 +65,10 @@ di-build di luar sandbox pembuatan file ini. Ada 2 cara, pilih salah satu:
 
 ### Cara B - Build manual di komputer/VPS sendiri
 
-Butuh **JDK 17 atau lebih baru** (17/21/25 semua bisa — annotation processor
-velocity-api yang tadinya butuh JDK 25 khusus sudah dimatikan, karena
-velocity-plugin.json sekarang ditulis manual, bukan digenerate otomatis) dan
-Maven terpasang, lalu dari folder `geyser-authme-bypass/`:
+Butuh **JDK 25** (bukan cuma 17/21 — jar velocity-api 4.0.0-SNAPSHOT sendiri
+di-compile pakai JDK 25, jadi javac versi lama tidak bisa membacanya sama
+sekali, walau hasil jar plugin ini sendiri tetap jalan di JVM 17 ke atas)
+dan Maven terpasang, lalu dari folder `geyser-authme-bypass/`:
 
 ```bash
 mvn clean package
