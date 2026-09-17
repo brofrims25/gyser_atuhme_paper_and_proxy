@@ -1,0 +1,14 @@
+{
+  "id": "bedrockauthbypass",
+  "name": "BedrockAuthBypass",
+  "version": "1.0.0",
+  "description": "Alihkan player Bedrock (Floodgate) langsung lewat server login, skip AuthMe.",
+  "authors": [],
+  "dependencies": [
+    {
+      "id": "floodgate",
+      "optional": false
+    }
+  ],
+  "main": "com.mynetwork.bedrockbypass.velocity.BedrockBypassVelocityPlugin"
+}

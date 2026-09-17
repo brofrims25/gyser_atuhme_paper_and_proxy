@@ -65,10 +65,10 @@ di-build di luar sandbox pembuatan file ini. Ada 2 cara, pilih salah satu:
 
 ### Cara B - Build manual di komputer/VPS sendiri
 
-Butuh **JDK 25** (bukan cuma 17/21 — modul Velocity butuh JDK 25 untuk
-meng-compile annotation processor-nya velocity-api, walau hasil jar-nya
-sendiri tetap jalan di JVM 17 ke atas) dan Maven terpasang, lalu dari folder
-`geyser-authme-bypass/`:
+Butuh **JDK 17 atau lebih baru** (17/21/25 semua bisa — annotation processor
+velocity-api yang tadinya butuh JDK 25 khusus sudah dimatikan, karena
+velocity-plugin.json sekarang ditulis manual, bukan digenerate otomatis) dan
+Maven terpasang, lalu dari folder `geyser-authme-bypass/`:
 
 ```bash
 mvn clean package
@@ -89,7 +89,9 @@ adalah `1.21.11`). Konsekuensinya:
   berubah tiap beberapa hari.
 - **Velocity** (resmi maupun fork populer) pindah ke `velocity-api
   4.0.0-SNAPSHOT` pertengahan 2026, dan proxy-nya sendiri butuh **Java 25**
-  untuk dijalankan.
+  untuk DIJALANKAN (pastikan JVM yang menjalankan proxy-mu Java 25+). Untuk
+  meng-*compile* plugin ini sendiri, JDK 17 ke atas sudah cukup — lihat
+  catatan di bedrockbypass-velocity/pom.xml.
 - Karena itu di setiap `pom.xml` modul, versi dependency sengaja ditaruh di
   `<properties>` paling atas dengan komentar link ke tempat cek versi
   terbaru — **cek dulu, sesuaikan kalau perlu, baru `mvn package`.**
