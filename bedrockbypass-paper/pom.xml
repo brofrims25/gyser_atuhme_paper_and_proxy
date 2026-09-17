@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.mynetwork.bedrockbypass</groupId>
+        <artifactId>bedrockbypass-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>bedrockbypass-paper</artifactId>
+    <packaging>jar</packaging>
+    <name>BedrockAuthBypass-Paper</name>
+
+    <properties>
+        <!--
+          =====================================================================
+          PENTING - CEK ULANG SEBELUM BUILD:
+          Sejak Minecraft pindah ke penomoran berbasis tahun (26.1, 26.2, dst,
+          menggantikan 1.21.x mulai 2026), skema versi artifact Paper API juga
+          berubah dari "1.21.x-R0.1-SNAPSHOT" menjadi "26.x.build.NNN-stable".
+          Nomor build (NNN) berubah tiap beberapa hari, jadi versi di bawah ini
+          KEMUNGKINAN sudah basi saat kamu baca ini.
+
+          Cek versi paling baru di:
+            https://repo.papermc.io/service/rest/repository/browse/maven-public/io/papermc/paper/paper-api/
+          atau lihat versi yang dipakai project lain lewat:
+            https://papermc.io/downloads/paper
+
+          Plugin ini HANYA memakai API Bukkit inti yang stabil (PlayerJoinEvent,
+          BukkitScheduler, JavaPlugin) sehingga satu JAR hasil build umumnya
+          tetap jalan di rentang 1.21 - 26.x tanpa perlu di-compile ulang.
+          Kalau server-mu masih di jalur 1.21.x lama, cukup ganti versi di
+          bawah ke versi 1.21.x yang sesuai (mis. 1.21.8-R0.1-SNAPSHOT).
+          =====================================================================
+        -->
+        <paper.api.version>1.21.8-R0.1-SNAPSHOT</paper.api.version>
+
+        <!-- Cek versi terbaru: https://repo.opencollab.dev/maven-snapshots/org/geysermc/floodgate/api/ -->
+        <floodgate.api.version>2.2.5-SNAPSHOT</floodgate.api.version>
+
+        <!-- Cek versi terbaru: https://repo.codemc.org/service/rest/repository/browse/maven-public/fr/xephi/authme/ -->
+        <authme.api.version>5.6.0-SNAPSHOT</authme.api.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>opencollab-snapshot-repo</id>
+            <url>https://repo.opencollab.dev/maven-snapshots/</url>
+        </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- API untuk deteksi player Bedrock. Floodgate WAJIB sudah terpasang
+                 sebagai plugin terpisah (floodgate-spigot) di server ini juga,
+                 bukan cuma di proxy - lihat README.
+
+                 Exclusion di bawah WAJIB ada: transitive dependency-nya
+                 (org.geysermc.cumulus:cumulus, dipakai untuk fitur "Forms" yang
+                 TIDAK kita pakai) jar-nya kadang tidak ter-publish/hilang di
+                 repo manapun untuk snapshot tertentu, dan bikin build gagal
+                 dengan error "Could not find artifact ...cumulus...". Karena
+                 plugin ini cuma memanggil isFloodgatePlayer(), aman untuk
+                 di-exclude. -->
+            <groupId>org.geysermc.floodgate</groupId>
+            <artifactId>api</artifactId>
+            <version>${floodgate.api.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.geysermc.cumulus</groupId>
+                    <artifactId>cumulus</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <!-- API AuthMe untuk force-register / force-login. AuthMe WAJIB
+                 sudah terpasang sebagai plugin terpisah di server ini. -->
+            <groupId>fr.xephi</groupId>
+            <artifactId>authme</artifactId>
+            <version>${authme.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

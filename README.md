@@ -48,9 +48,24 @@ sendiri — supaya tidak diam-diam gagal.
 
 ## Build
 
-Karena butuh internet ke Maven Central / repo.papermc.io / repo.opencollab.dev /
-repo.codemc.org untuk resolve dependency, build ini **harus dijalankan di
-komputer/servermu sendiri**, bukan di sandbox pembuatan file ini:
+Proyek ini butuh internet ke Maven Central / repo.papermc.io /
+repo.opencollab.dev / repo.codemc.org untuk resolve dependency, jadi harus
+di-build di luar sandbox pembuatan file ini. Ada 2 cara, pilih salah satu:
+
+### Cara A - GitHub Actions (tanpa install apa-apa di komputer sendiri)
+
+1. Buat repository baru di GitHub (boleh private), lalu upload/push seluruh
+   isi folder `geyser-authme-bypass/` ke situ (termasuk folder `.github/`).
+2. Buka tab **Actions** di repo tersebut - workflow "Build plugin jars"
+   akan otomatis jalan setiap kamu push (atau klik **Run workflow** manual).
+3. Setelah selesai (hijau/centang), buka run tersebut, scroll ke bagian
+   **Artifacts** di bawah - ada `bedrockbypass-paper` dan
+   `bedrockbypass-velocity`, masing-masing berisi file `.jar`-nya. Download,
+   lalu extract dari zip yang GitHub buat.
+
+### Cara B - Build manual di komputer/VPS sendiri
+
+Butuh JDK 17+ dan Maven terpasang, lalu dari folder `geyser-authme-bypass/`:
 
 ```bash
 mvn clean package
