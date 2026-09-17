@@ -23,8 +23,9 @@
           sendiri sudah dikompilasi pakai JDK 25 - JDK yang lebih lama
           (mis. 21) akan gagal dengan error "class file version 69.0 ...
           only recognizes class file versions up to 65.0" saat mencoba
-          MEMUAT processor itu, walau kode kita sendiri cuma target
-          --release 17. Kalau proxy-mu masih velocity-api versi lama
+          MEMUAT processor itu, walau kode kita sendiri cuma menyasar
+          bytecode target Java 17 (opsi compiler "release" bernilai 17).
+          Kalau proxy-mu masih velocity-api versi lama
           (3.4.0-SNAPSHOT ke bawah), JDK 21 biasanya masih cukup.
 
           Velocity resmi (PaperMC) & fork populer (mis. Velocity-CTD) sejak
